@@ -1,0 +1,9 @@
+# Use & for color codes
+prefix: "&1IE>"
+
+# If this is set to false, you will need to add ids to allowed-item
+all-item: true
+
+allowed-item:
+- 276
+- 277
