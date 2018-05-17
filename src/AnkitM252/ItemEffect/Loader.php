@@ -16,8 +16,8 @@ class Loader extends PluginBase
         $this->getServer()->getPluginManager()->registerEvents(new EventListener($this), $this);
         $this->getLogger()->info("ItemEffect has been enabled!");
     }
-
-    public function onCommand(CommandSender $sender, Command $command, $labels, array $args)
+    
+    public function onCommand(CommandSender $sender, Command $command, $labels, array $args) : bool
     {
         $cmd = strtolower($command->getName());
         if ($cmd == "itemeffect") {
@@ -28,60 +28,53 @@ class Loader extends PluginBase
                             if (strtolower($args[0]) == "remove") {
                                 $ef_upper = strtoupper($args[1]);
                                 $ef_lower = strtolower($args[1]);
-
+                                
                                 $item = $sender->getInventory()->getItemInHand();
-
+                                
                                 if ($item->getId() != 0) {
                                     if (Effect::getEffectByName($ef_lower) != null) {
-
+                                        
                                         $lores = $item->getLore();
-
+                                        
                                         if (isset($lores[$ef_upper])) {
                                             unset($lores[$ef_upper]);
-
                                             $item->setLore($lores);
-
                                             $sender->getInventory()->setItemInHand($item);
-
                                             $sender->sendMessage($this->getPrefix() . TF::GREEN . "Successfully removed " . TF::GOLD . $ef_upper . TF::GREEN . " effect in your item!");
-
+                                            
                                         } else {
                                             $sender->sendMessage($this->getPrefix() . TF::RED . "The effect " . TF::GOLD . $ef_upper . TF::RED . " isn't available in your item!");
                                         }
-
+                                        
                                     } else {
                                         $sender->sendMessage($this->getPrefix() . TF::RED . "That effect doesn't exist!");
                                     }
-
                                 } else {
                                     $sender->sendMessage($this->getPrefix() . TF::RED . "Please hold an item!");
                                 }
                             } else if (strtolower($args[0]) == "add") {
                                 $effect = strtoupper($args[1]);
                                 $ef = strtolower($args[1]);
-
+                                
                                 $item = $sender->getInventory()->getItemInHand();
-
+                                
                                 if ($item->getId() != 0) {
                                     if (Effect::getEffectByName($ef) != null) {
                                         $lores = $item->getLore();
-
+                                        
                                         if (!isset($lores[$effect])) {
                                             $lores[] = $effect;
-
                                             $item->setLore($lores);
-
                                             $sender->getInventory()->setItemInHand($item);
-
                                             $sender->sendMessage($this->getPrefix() . TF::GREEN . "Successfully added " . TF::GOLD . $effect . TF::GREEN . " effect in your item!");
                                         } else {
-                                            $sender->sendMessage($this->getPrefix() . TF::RED . "This effect is already in use on this item!");
+                                            $sender->sendMessage($this->getPrefix() . TF::RED . "Your item already has this effect!");
                                         }
-
+                                        
                                     } else {
                                         $sender->sendMessage($this->getPrefix() . TF::RED . "That effect doesn't exist!");
                                     }
-
+                                    
                                 } else {
                                     $sender->sendMessage($this->getPrefix() . TF::RED . "Please hold an item!");
                                 }
@@ -89,10 +82,10 @@ class Loader extends PluginBase
                         } else {
                             $sender->sendMessage($this->getPrefix() . TF::RED . "Usage: /ie <add|remove> <effect_name>");
                         }
-
+                        
                         if (strtolower($args[0]) == "check") {
                             $item = $sender->getInventory()->getItemInHand();
-
+                            
                             if ($item->getId() != 0) {
                                 $lores = $item->getLore();
                                 $arr = [];
@@ -122,9 +115,10 @@ class Loader extends PluginBase
             } else {
                 $sender->sendMessage($this->getPrefix() . TF::RED . "Run this command in game!");
             }
+            return true;
         }
     }
-
+    
     public function translateColors($symbol, $message)
     {
         $message = str_replace($symbol . "0", TF::BLACK, $message);
@@ -143,17 +137,17 @@ class Loader extends PluginBase
         $message = str_replace($symbol . "d", TF::LIGHT_PURPLE, $message);
         $message = str_replace($symbol . "e", TF::YELLOW, $message);
         $message = str_replace($symbol . "f", TF::WHITE, $message);
-
+        
         $message = str_replace($symbol . "k", TF::OBFUSCATED, $message);
         $message = str_replace($symbol . "l", TF::BOLD, $message);
         $message = str_replace($symbol . "m", TF::STRIKETHROUGH, $message);
         $message = str_replace($symbol . "n", TF::UNDERLINE, $message);
         $message = str_replace($symbol . "o", TF::ITALIC, $message);
         $message = str_replace($symbol . "r", TF::RESET, $message);
-
+        
         return $message;
     }
-
+    
     public function getPrefix()
     {
         return $this->translateColors("&", $this->getConfig()->get("prefix") . "&r ");

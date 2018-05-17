@@ -1,7 +1,7 @@
 name: ItemEffect
 main: AnkitM252\ItemEffect\Loader
-api: 3.0.0-ALPHA10
-version: 1.0.1
+api: 3.0.0-ALPHA12
+version: 1.0.2
 author: AnkitM252
 
 commands:
