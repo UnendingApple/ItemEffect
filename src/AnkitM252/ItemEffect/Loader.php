@@ -33,19 +33,19 @@ class Loader extends PluginBase
                                 
                                 if ($item->getId() != 0) {
                                     if (Effect::getEffectByName($ef_lower) != null) {
-                                        
                                         $lores = $item->getLore();
-                                        
-                                        if (isset($lores[$ef_upper])) {
-                                            unset($lores[$ef_upper]);
-                                            $item->setLore($lores);
-                                            $sender->getInventory()->setItemInHand($item);
-                                            $sender->sendMessage($this->getPrefix() . TF::GREEN . "Successfully removed " . TF::GOLD . $ef_upper . TF::GREEN . " effect in your item!");
-                                            
-                                        } else {
-                                            $sender->sendMessage($this->getPrefix() . TF::RED . "The effect " . TF::GOLD . $ef_upper . TF::RED . " isn't available in your item!");
+										
+                                        foreach ($lores as $key => $l) {
+                                            if ($l == $ef_upper) {
+                                                unset($lores[$key]);
+                                                $item->setLore($lores);
+                                                $sender->getInventory()->setItemInHand($item);
+                                                $sender->sendMessage($this->getPrefix() . TF::GREEN . "Successfully removed " . TF::GOLD . $ef_upper . TF::GREEN . " effect in your item!");
+                                                return true;
+                                            }
                                         }
-                                        
+										
+                                        $sender->sendMessage($this->getPrefix() . TF::RED . "The effect " . TF::GOLD . $ef_upper . TF::RED . " isn't available in your item!");
                                     } else {
                                         $sender->sendMessage($this->getPrefix() . TF::RED . "That effect doesn't exist!");
                                     }
@@ -61,8 +61,13 @@ class Loader extends PluginBase
                                 if ($item->getId() != 0) {
                                     if (Effect::getEffectByName($ef) != null) {
                                         $lores = $item->getLore();
-                                        
-                                        if (!isset($lores[$effect])) {
+                                        $isset = false;
+                                        foreach ($lores as $key => $l) {
+                                            if ($l == $effect) {
+                                                $isset = true;
+                                            }
+                                        }
+                                        if (!$isset) {
                                             $lores[] = $effect;
                                             $item->setLore($lores);
                                             $sender->getInventory()->setItemInHand($item);
@@ -70,7 +75,6 @@ class Loader extends PluginBase
                                         } else {
                                             $sender->sendMessage($this->getPrefix() . TF::RED . "Your item already has this effect!");
                                         }
-                                        
                                     } else {
                                         $sender->sendMessage($this->getPrefix() . TF::RED . "That effect doesn't exist!");
                                     }
@@ -122,7 +126,7 @@ class Loader extends PluginBase
     public function translateColors($symbol, $message)
     {
         $message = str_replace($symbol . "0", TF::BLACK, $message);
-        $message = str_replace($symbol . "1", TF::DARK_BLUE, $message);
+        $message = str_replace($symbol . "1", TF::DARK_PURPLE, $message);
         $message = str_replace($symbol . "2", TF::DARK_GREEN, $message);
         $message = str_replace($symbol . "3", TF::DARK_AQUA, $message);
         $message = str_replace($symbol . "4", TF::DARK_RED, $message);
@@ -130,7 +134,7 @@ class Loader extends PluginBase
         $message = str_replace($symbol . "6", TF::GOLD, $message);
         $message = str_replace($symbol . "7", TF::GRAY, $message);
         $message = str_replace($symbol . "8", TF::DARK_GRAY, $message);
-        $message = str_replace($symbol . "9", TF::BLUE, $message);
+        $message = str_replace($symbol . "9", TF::LIGHT_PURPLE, $message);
         $message = str_replace($symbol . "a", TF::GREEN, $message);
         $message = str_replace($symbol . "b", TF::AQUA, $message);
         $message = str_replace($symbol . "c", TF::RED, $message);

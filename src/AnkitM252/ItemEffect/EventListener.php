@@ -5,6 +5,7 @@ use pocketmine\entity\Effect;
 use pocketmine\entity\EffectInstance;
 use pocketmine\event\Listener;
 use pocketmine\event\player\PlayerItemHeldEvent;
+use pocketmine\utils\TextFormat as TF;
 
 class EventListener implements Listener
 {
@@ -23,11 +24,10 @@ class EventListener implements Listener
         $lore = $i->getLore();
         foreach ($lore as $e) {
             $name = strtolower($e);
-            $e = Effect::getEffectByName($name);
+            $e    = Effect::getEffectByName($name);
             
-            $effect = new EffectInstance($e);
-            
-            if ($effect != null) {
+            if ($e != null) {
+                $effect = new EffectInstance($e);
                 $p->addEffect($effect);
             }
         }
