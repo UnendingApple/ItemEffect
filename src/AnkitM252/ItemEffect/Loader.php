@@ -126,7 +126,7 @@ class Loader extends PluginBase
     public function translateColors($symbol, $message)
     {
         $message = str_replace($symbol . "0", TF::BLACK, $message);
-        $message = str_replace($symbol . "1", TF::DARK_PURPLE, $message);
+        $message = str_replace($symbol . "1", TF::DARK_BLUE, $message);
         $message = str_replace($symbol . "2", TF::DARK_GREEN, $message);
         $message = str_replace($symbol . "3", TF::DARK_AQUA, $message);
         $message = str_replace($symbol . "4", TF::DARK_RED, $message);
@@ -134,7 +134,7 @@ class Loader extends PluginBase
         $message = str_replace($symbol . "6", TF::GOLD, $message);
         $message = str_replace($symbol . "7", TF::GRAY, $message);
         $message = str_replace($symbol . "8", TF::DARK_GRAY, $message);
-        $message = str_replace($symbol . "9", TF::LIGHT_PURPLE, $message);
+        $message = str_replace($symbol . "9", TF::BLUE, $message);
         $message = str_replace($symbol . "a", TF::GREEN, $message);
         $message = str_replace($symbol . "b", TF::AQUA, $message);
         $message = str_replace($symbol . "c", TF::RED, $message);
